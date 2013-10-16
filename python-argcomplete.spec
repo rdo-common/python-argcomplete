@@ -4,7 +4,7 @@
 Summary: 	Bash tab completion for argparse
 Name: 		python-argcomplete
 Version: 	0.6.3
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 License: 	ASL 2.0
 Group: 		Development/Libraries
 Url: 		https://github.com/kislyuk/argcomplete
@@ -47,12 +47,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/activate-global-python-argcomplete
 %{_bindir}/python-argcomplete-check-easy-install-script
 %{_bindir}/register-python-argcomplete
-%{python_sitelib}/argcomplete-%{version}-py2.7.egg-info
+%{python_sitelib}/argcomplete-%{version}-py*.egg-info
 %{python_sitelib}/argcomplete/
 %exclude %{python_sitelib}/test
 
 
 %changelog
+* Wed Oct 16 2013 - Dale Macartney <dbmacartney@gmail.com> 0.6.3-3
+- Correct missing files for el6
+
 * Tue Oct 15 2013 - Dale Macartney <dbmacartney@gmail.com> 0.6.3-2
 - Initial packaging for Fedora Project and including LICENSE.rst in %doc
 
