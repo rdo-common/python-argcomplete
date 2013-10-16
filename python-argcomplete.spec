@@ -1,18 +1,18 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
-Summary: 	Bash tab completion for argparse
-Name: 		python-argcomplete
-Version: 	0.6.3
-Release: 	3%{?dist}
-License: 	ASL 2.0
-Group: 		Development/Libraries
-Url: 		https://github.com/kislyuk/argcomplete
+Summary:	Bash tab completion for argparse
+Name:		python-argcomplete
+Version:	0.6.3
+Release:	3%{?dist}
+License:	ASL 2.0
+Group:		Development/Libraries
+Url:		https://github.com/kislyuk/argcomplete
 Source0:	http://pypi.python.org/packages/source/a/argcomplete/argcomplete-%{version}.tar.gz
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
-BuildArch: 	noarch
-Requires:  	python-argparse
+BuildRequires:	python-devel
+BuildRequires:	python-setuptools
+BuildArch:	noarch
+Requires:	python-argparse
 
 %description
 Argcomplete provides easy, extensible command line tab completion of
@@ -42,8 +42,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%doc README.rst
-%doc LICENSE.rst
+%doc README.rst LICENSE.rst
 %{_bindir}/activate-global-python-argcomplete
 %{_bindir}/python-argcomplete-check-easy-install-script
 %{_bindir}/register-python-argcomplete
@@ -57,7 +56,7 @@ rm -rf $RPM_BUILD_ROOT
 - Correct missing files for el6
 
 * Tue Oct 15 2013 - Dale Macartney <dbmacartney@gmail.com> 0.6.3-2
-- Initial packaging for Fedora Project and including LICENSE.rst in %doc
+- Initial packaging for Fedora Project and including LICENSE.rst in docs
 
 * Thu Jan 31 2013 - Marco Neciarini <marco.nenciarini@2ndquadrant.it> 0.3.5-1
 - Initial packaging.
