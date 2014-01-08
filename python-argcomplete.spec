@@ -4,7 +4,7 @@
 Summary:	Bash tab completion for argparse
 Name:		python-argcomplete
 Version:	0.6.3
-Release:	3%{?dist}
+Release:	4%{?dist}
 License:	ASL 2.0
 Group:		Development/Libraries
 Url:		https://github.com/kislyuk/argcomplete
@@ -52,6 +52,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jan 8 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.6.3-4
+- Pushing new build for update as previous was not picked up. 
+
 * Wed Oct 16 2013 - Dale Macartney <dbmacartney@gmail.com> 0.6.3-3
 - Correct missing files for el6
 
