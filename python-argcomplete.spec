@@ -52,7 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Jan 20 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.6.7-1
+* Mon Jan 13 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.6.7-1
 - Applying latest patch of argcomplete.
 
 * Wed Jan 8 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.6.3-4
