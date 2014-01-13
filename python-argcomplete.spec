@@ -4,7 +4,7 @@
 Summary:	Bash tab completion for argparse
 Name:		python-argcomplete
 Version:	0.6.7
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	ASL 2.0
 Group:		Development/Libraries
 Url:		https://github.com/kislyuk/argcomplete
@@ -48,10 +48,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/register-python-argcomplete
 %{python_sitelib}/argcomplete-%{version}-py*.egg-info
 %{python_sitelib}/argcomplete/
-%exclude %{python_sitelib}/test
 
 
 %changelog
+* Mon Jan 13 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.6.7-2
+- Removing '%exclude %{python_sitelib}/test' fom %files as no longer needed. 
+
 * Mon Jan 13 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.6.7-1
 - Applying latest patch of argcomplete.
 
