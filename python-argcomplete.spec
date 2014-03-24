@@ -44,6 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc README.rst LICENSE.rst
 %{_bindir}/activate-global-python-argcomplete
+%{_bindir}/python-argcomplete-check-easy-install-script
 %{_bindir}/python-argcomplete-check-easy-install-script0
 %{_bindir}/register-python-argcomplete
 %{python_sitelib}/argcomplete-%{version}-py*.egg-info
