@@ -3,7 +3,7 @@
 
 Summary:	Bash tab completion for argparse
 Name:		python-argcomplete
-Version:	0.8.4
+Version:	0.8.8
 Release:	1%{?dist}
 License:	ASL 2.0
 Group:		Development/Libraries
@@ -51,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue May 5 2015 - Steve Traylen <steve.traylen@cern.ch> 0.8.8-1
+- Updating package to 0.8.8
+
 * Sun Dec 14 2014 - Dale Macartney <dbmacartney@fedoraproject.org> 0.8.4-1
 - Updating package to 0.8.4
 
