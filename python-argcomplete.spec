@@ -1,16 +1,25 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 Summary:	Bash tab completion for argparse
 Name:		python-argcomplete
 Version:	0.8.9
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	ASL 2.0
 Group:		Development/Libraries
 Url:		https://github.com/kislyuk/argcomplete
 Source0:	http://pypi.python.org/packages/source/a/argcomplete/argcomplete-%{version}.tar.gz
-BuildRequires:	python-devel
+BuildRequires:	python2-devel
 BuildRequires:	python-setuptools
+%if 0%{?with_python3}
+BuildRequires:	python-tools
+BuildRequires:	python3-devel
+BuildRequires:	python3-setuptools
+%endif
 BuildArch:	noarch
 Requires:	python-argparse
 
@@ -28,14 +37,54 @@ options or subparsers, and if your program can dynamically suggest
 completions for your argument/option values (for example, if the user
 is browsing resources over the network).
 
+%if 0%{?with_python3}
+%package -n python3-argcomplete
+Summary:     Bash tab completion for argparse
+
+%description -n python3-argcomplete
+Argcomplete provides easy, extensible command line tab completion of
+arguments for your Python script.
+
+It makes two assumptions:
+
+ * You're using bash as your shell
+ * You're using argparse to manage your command line arguments/options
+
+Argcomplete is particularly useful if your program has lots of
+options or subparsers, and if your program can dynamically suggest
+completions for your argument/option values (for example, if the user
+is browsing resources over the network).
+
+%endif
+
 %prep
 %setup -n argcomplete-%{version} -q
+
+%if 0%{?with_python3}
+rm -rf %{py3dir}
+cp -a . %{py3dir}
+%endif # with_python3
 
 %build
 python setup.py build
 
+%if 0%{?with_python3}
+pushd %{py3dir}
+2to3 --write --nobackups .
+%{__python3} setup.py build
+popd
+%endif
+
 %install
+%if 0%{?with_python3}
+pushd %{py3dir}
+%{__python3} setup.py install --skip-build --root %{buildroot}
+popd
+%endif
+
 python setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -49,8 +98,21 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/argcomplete-%{version}-py*.egg-info
 %{python_sitelib}/argcomplete/
 
+%if 0%{?with_python3}
+%files -n python3-argcomplete
+%doc README.rst LICENSE.rst
+%{python3_sitelib}/argcomplete-%{version}-py*.egg-info
+%{python3_sitelib}/argcomplete/
+
+%endif
+
+
+
 
 %changelog
+* Tue Jun 2 2015 - Steve Traylen <steve.traylen@cern.ch> 0.8.8-2
+- Add python3 package (#1225934)
+
 * Tue Jun 02 2015 Fedora Release Monitoring <release-monitoring@fedoraproject.org> - 0.8.9-1
 - Update to 0.8.9 (#1227119)
 
