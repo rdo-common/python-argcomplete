@@ -8,7 +8,7 @@
 Summary:	Bash tab completion for argparse
 Name:		python-argcomplete
 Version:	0.8.9
-Release:	2%{?dist}
+Release:	3%{?dist}
 License:	ASL 2.0
 Group:		Development/Libraries
 Url:		https://github.com/kislyuk/argcomplete
@@ -110,6 +110,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8.9-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Tue Jun 2 2015 - Steve Traylen <steve.traylen@cern.ch> 0.8.8-2
 - Add python3 package (#1225934)
 
