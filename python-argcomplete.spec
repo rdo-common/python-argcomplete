@@ -8,7 +8,7 @@
 Summary:	Bash tab completion for argparse
 Name:		python-argcomplete
 Version:	1.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	ASL 2.0
 Group:		Development/Libraries
 Url:		https://github.com/kislyuk/argcomplete
@@ -39,9 +39,6 @@ is browsing resources over the network).
 
 %package -n python2-argcomplete
 Summary:     %{summary}
-%if 0%{?with_python3} == 0
-Provides:    /usr/bin/register-python-argcomplete
-%endif
 %{?python_provide:%python_provide python2-argcomplete}
 
 %description -n python2-argcomplete
@@ -61,7 +58,6 @@ is browsing resources over the network).
 %if 0%{?with_python3}
 %package -n python3-argcomplete
 Summary:     %{summary}
-Provides:    /usr/bin/register-python-argcomplete
 %{?python_provide:%python_provide python3-argcomplete}
 
 %description -n python3-argcomplete
@@ -90,11 +86,21 @@ is browsing resources over the network).
 %endif
 
 %install
-%py2_install
 %if 0%{?with_python3}
 %py3_install
-sed -i '1s|#!/usr/bin/python2|#!%{__python3}|' %{buildroot}%{_bindir}/*
+for file in activate-global-python-argcomplete python-argcomplete-check-easy-install-script register-python-argcomplete ; do
+mv %{buildroot}%{_bindir}/$file ./$file.py3
+done
 %endif
+
+%py2_install
+
+%if 0%{?with_python3}
+for file in activate-global-python-argcomplete python-argcomplete-check-easy-install-script register-python-argcomplete ; do
+mv ./$file.py3 %{buildroot}%{_bindir}/$file
+done
+%endif
+
 
 %files -n python2-argcomplete
 %license LICENSE.rst
@@ -110,11 +116,16 @@ sed -i '1s|#!/usr/bin/python2|#!%{__python3}|' %{buildroot}%{_bindir}/*
 %{python3_sitelib}/argcomplete/
 %endif
 
+# This goes in the python2-argcomplete package when we build without python3,
+# otherwise it goes into the python3 subpackage
 %{_bindir}/activate-global-python-argcomplete
 %{_bindir}/python-argcomplete-check-easy-install-script
 %{_bindir}/register-python-argcomplete
 
 %changelog
+* Sat Nov 14 2015 Toshio Kuratomi <toshio@fedoraproject.org> - - 1.0.0-2
+- A few minor changes to simplify and take care of cornercases
+
 * Sat Nov 14 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@laptop> - 1.0.0-1
 - Update to latest version (#1227119)
 - Use %license
