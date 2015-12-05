@@ -98,9 +98,9 @@ mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d/
 for file in activate-global-python-argcomplete python-argcomplete-check-easy-install-script register-python-argcomplete ; do
 mv ./$file.py3 %{buildroot}%{_bindir}/$file
 done
-install -p -m0644 %{python3_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
+install -p -m0644 %{buildroot}%{python3_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
 %else
-install -p -m0644 %{python2_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
+install -p -m0644 %{buildroot}%{python2_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
 %endif
 
 %files -n python2-%{modname}
