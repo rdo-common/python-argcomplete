@@ -1,27 +1,17 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+%global modname argcomplete
 
 %if 0%{?fedora}
 %global with_python3 1
 %endif
 
-Summary:	Bash tab completion for argparse
-Name:		python-argcomplete
-Version:	1.0.0
-Release:	2%{?dist}
-License:	ASL 2.0
-Group:		Development/Libraries
-Url:		https://github.com/kislyuk/argcomplete
-Source0:	http://pypi.python.org/packages/source/a/argcomplete/argcomplete-%{version}.tar.gz
-BuildRequires:	python2-devel
-BuildRequires:	python-setuptools
-%if 0%{?with_python3}
-BuildRequires:	python-tools
-BuildRequires:	python3-devel
-BuildRequires:	python3-setuptools
-%endif
+Name:           python-%{modname}
+Summary:        Bash tab completion for argparse
+Version:        1.0.0
+Release:        3%{?dist}
+License:        ASL 2.0
+URL:		https://github.com/kislyuk/argcomplete
+Source0:	http://pypi.python.org/packages/source/a/argcomplete/%{modname}-%{version}.tar.gz
 BuildArch:	noarch
-Requires:	python-argparse
 
 %description
 Argcomplete provides easy, extensible command line tab completion of
@@ -37,11 +27,13 @@ options or subparsers, and if your program can dynamically suggest
 completions for your argument/option values (for example, if the user
 is browsing resources over the network).
 
-%package -n python2-argcomplete
-Summary:     %{summary}
-%{?python_provide:%python_provide python2-argcomplete}
+%package -n python2-%{modname}
+Summary:        %{summary}
+%{?python_provide:%python_provide python2-%{modname}}
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
 
-%description -n python2-argcomplete
+%description -n python2-%{modname}
 Argcomplete provides easy, extensible command line tab completion of
 arguments for your Python script.
 
@@ -54,13 +46,18 @@ Argcomplete is particularly useful if your program has lots of
 options or subparsers, and if your program can dynamically suggest
 completions for your argument/option values (for example, if the user
 is browsing resources over the network).
+
+Python 2 version.
 
 %if 0%{?with_python3}
-%package -n python3-argcomplete
-Summary:     %{summary}
-%{?python_provide:%python_provide python3-argcomplete}
+%package -n python3-%{modname}
+Summary:        %{summary}
+%{?python_provide:%python_provide python3-%{modname}}
+BuildRequires:  python-tools
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
 
-%description -n python3-argcomplete
+%description -n python3-%{modname}
 Argcomplete provides easy, extensible command line tab completion of
 arguments for your Python script.
 
@@ -74,10 +71,11 @@ options or subparsers, and if your program can dynamically suggest
 completions for your argument/option values (for example, if the user
 is browsing resources over the network).
 
+Python 3 version.
 %endif
 
 %prep
-%setup -n argcomplete-%{version} -q
+%setup -n %{modname}-%{version} -q
 
 %build
 %py2_build
@@ -94,26 +92,27 @@ done
 %endif
 
 %py2_install
+mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d/
 
 %if 0%{?with_python3}
 for file in activate-global-python-argcomplete python-argcomplete-check-easy-install-script register-python-argcomplete ; do
 mv ./$file.py3 %{buildroot}%{_bindir}/$file
 done
+install -p -m0644 %{python3_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
+%else
+install -p -m0644 %{python2_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
 %endif
 
-
-%files -n python2-argcomplete
+%files -n python2-%{modname}
 %license LICENSE.rst
 %doc README.rst
-%{python_sitelib}/argcomplete-%{version}-py*.egg-info
-%{python_sitelib}/argcomplete/
+%{python2_sitelib}/%{modname}*
 
 %if 0%{?with_python3}
-%files -n python3-argcomplete
+%files -n python3-%{modname}
 %license LICENSE.rst
 %doc README.rst
-%{python3_sitelib}/argcomplete-%{version}-py*.egg-info
-%{python3_sitelib}/argcomplete/
+%{python3_sitelib}/%{modname}*
 %endif
 
 # This goes in the python2-argcomplete package when we build without python3,
@@ -121,9 +120,13 @@ done
 %{_bindir}/activate-global-python-argcomplete
 %{_bindir}/python-argcomplete-check-easy-install-script
 %{_bindir}/register-python-argcomplete
+%{_sysconfdir}/bash_completion.d/python-argcomplete.sh
 
 %changelog
-* Sat Nov 14 2015 Toshio Kuratomi <toshio@fedoraproject.org> - - 1.0.0-2
+* Sat Dec 05 2015 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 1.0.0-3
+- Ship bash completion file within RPM
+
+* Sat Nov 14 2015 Toshio Kuratomi <toshio@fedoraproject.org> - 1.0.0-2
 - A few minor changes to simplify and take care of cornercases
 
 * Sat Nov 14 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@laptop> - 1.0.0-1
