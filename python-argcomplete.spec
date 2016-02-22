@@ -6,8 +6,8 @@
 
 Name:           python-%{modname}
 Summary:        Bash tab completion for argparse
-Version:        1.0.0
-Release:        4%{?dist}
+Version:        1.1.0
+Release:        1%{?dist}
 License:        ASL 2.0
 URL:		https://github.com/kislyuk/argcomplete
 Source0:	http://pypi.python.org/packages/source/a/argcomplete/%{modname}-%{version}.tar.gz
@@ -123,6 +123,9 @@ install -p -m0644 %{buildroot}%{python2_sitelib}/%{modname}/bash_completion.d/py
 %{_sysconfdir}/bash_completion.d/python-argcomplete.sh
 
 %changelog
+* Mon Feb 22 2016 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 1.1.0-1
+- Update to 1.1.0 (RHBZ #1310473)
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
