@@ -12,7 +12,7 @@ URL:            https://github.com/kislyuk/argcomplete
 Source0:        %{url}/archive/v%{version}/%{modname}-%{version}.tar.gz
 
 %if %{with check}
-BuildRequires:  %{_bindir}/tcsh
+BuildRequires:  tcsh
 %endif
 
 BuildArch:      noarch
@@ -94,6 +94,7 @@ export LC_ALL=C.UTF-8
 %{python3_sitelib}/%{modname}/
 %{_bindir}/activate-global-python-argcomplete
 %{_bindir}/python-argcomplete-check-easy-install-script
+%{_bindir}/python-argcomplete-tcsh
 %{_bindir}/register-python-argcomplete
 %{_sysconfdir}/bash_completion.d/python-argcomplete.sh
 
