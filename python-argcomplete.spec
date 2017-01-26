@@ -1,7 +1,7 @@
 %global modname argcomplete
 
 # Currently it's broken: https://github.com/kislyuk/argcomplete/issues/174
-%bcond_with check
+%bcond_without check
 
 Name:           python-%{modname}
 Summary:        Bash tab completion for argparse
@@ -63,6 +63,8 @@ Python 3 version.
 
 %prep
 %autosetup -n %{modname}-%{version}
+# Remove useless BRs
+sed -i -r -e '/tests_require = /s/"(coverage|flake8|wheel)"[, ]*//g' setup.py
 
 %build
 %py2_build
