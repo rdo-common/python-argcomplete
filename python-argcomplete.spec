@@ -1,12 +1,11 @@
 %global modname argcomplete
 
-# Currently it's broken: https://github.com/kislyuk/argcomplete/issues/174
 %bcond_without check
 
 Name:           python-%{modname}
 Summary:        Bash tab completion for argparse
-Version:        1.8.2
-Release:        3%{?dist}
+Version:        1.9.2
+Release:        1%{?dist}
 License:        ASL 2.0
 URL:            https://github.com/kislyuk/argcomplete
 Source0:        %{url}/archive/v%{version}/%{modname}-%{version}.tar.gz
@@ -101,6 +100,9 @@ export LC_ALL=C.UTF-8
 %{_sysconfdir}/bash_completion.d/python-argcomplete.sh
 
 %changelog
+* Wed Nov 08 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.9.2-1
+- Update to 1.9.2
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
