@@ -4,7 +4,7 @@
 
 Name:           python-%{modname}
 Summary:        Bash tab completion for argparse
-Version:        1.9.2
+Version:        1.9.3
 Release:        1%{?dist}
 License:        ASL 2.0
 URL:            https://github.com/kislyuk/argcomplete
@@ -100,6 +100,9 @@ export LC_ALL=C.UTF-8
 %{_sysconfdir}/bash_completion.d/python-argcomplete.sh
 
 %changelog
+* Sun Nov 19 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.9.3-1
+- Update to 1.9.3
+
 * Wed Nov 08 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.9.2-1
 - Update to 1.9.2
 
