@@ -1,3 +1,7 @@
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 %global modname argcomplete
 
 %bcond_without check
@@ -45,6 +49,7 @@ BuildRequires:  python2-pexpect
 
 Python 2 version.
 
+%if 0%{?with_python3}
 %package -n python3-%{modname}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{modname}}
@@ -59,6 +64,7 @@ Requires:       python3-setuptools
 %description -n python3-%{modname} %{_description}
 
 Python 3 version.
+%endif
 
 %prep
 %autosetup -n %{modname}-%{version}
@@ -67,19 +73,25 @@ sed -i -r -e '/tests_require = /s/"(coverage|flake8|wheel)"[, ]*//g' setup.py
 
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 %install
 %py2_install
+%if 0%{?with_python3}
 %py3_install
+%endif
 mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d/
-install -p -m0644 %{buildroot}%{python3_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
+install -p -m0644 %{buildroot}%{python2_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
 
 %if %{with check}
 %check
 export LC_ALL=C.UTF-8
 %{__python2} setup.py test
+%if 0%{?with_python3}
 %{__python3} setup.py test
+%endif
 %endif
 
 %files -n python2-%{modname}
@@ -88,6 +100,7 @@ export LC_ALL=C.UTF-8
 %{python2_sitelib}/%{modname}-*.egg-info/
 %{python2_sitelib}/%{modname}/
 
+%if 0%{?with_python3}
 %files -n python3-%{modname}
 %license LICENSE.rst
 %doc README.rst
@@ -98,6 +111,7 @@ export LC_ALL=C.UTF-8
 %{_bindir}/python-argcomplete-tcsh
 %{_bindir}/register-python-argcomplete
 %{_sysconfdir}/bash_completion.d/python-argcomplete.sh
+%endif
 
 %changelog
 * Sun Nov 19 2017 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.9.3-1
