@@ -4,7 +4,7 @@
 
 %global modname argcomplete
 
-%bcond_without check
+%bcond_with check
 
 Name:           python-%{modname}
 Summary:        Bash tab completion for argparse
@@ -42,7 +42,7 @@ Summary:        %{summary}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 %if %{with check}
-BuildRequires:  python2-pexpect
+BuildRequires:  pexpect
 %endif
 
 %description -n python2-%{modname} %{_description}
@@ -83,7 +83,13 @@ sed -i -r -e '/tests_require = /s/"(coverage|flake8|wheel)"[, ]*//g' setup.py
 %py3_install
 %endif
 mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d/
-install -p -m0644 %{buildroot}%{python2_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/
+install -p -m0644 \
+%if 0%{?with_python3}
+    %{buildroot}%{python3_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh \
+%else
+    %{buildroot}%{python2_sitelib}/%{modname}/bash_completion.d/python-argcomplete.sh \
+%endif
+%{buildroot}%{_sysconfdir}/bash_completion.d/
 
 %if %{with check}
 %check
@@ -99,6 +105,13 @@ export LC_ALL=C.UTF-8
 %doc README.rst
 %{python2_sitelib}/%{modname}-*.egg-info/
 %{python2_sitelib}/%{modname}/
+%if !0%{?with_python3}
+%{_bindir}/activate-global-python-argcomplete
+%{_bindir}/python-argcomplete-check-easy-install-script
+%{_bindir}/python-argcomplete-tcsh
+%{_bindir}/register-python-argcomplete
+%{_sysconfdir}/bash_completion.d/python-argcomplete.sh
+%endif
 
 %if 0%{?with_python3}
 %files -n python3-%{modname}
